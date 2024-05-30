@@ -1,0 +1,58 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    env_file:
+      - .env
+    container_name: postgres
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    networks:
+      - transcendence
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - '8080:8080'
+    networks:
+      - transcendence
+
+  back:
+    build:
+      context: ./back
+      dockerfile: Dockerfile
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - '3001:3001'
+    volumes:
+      - images:/users_images
+    networks:
+      - transcendence
+    env_file:
+      - .env
+
+  front:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    restart: always
+    depends_on:
+      - back
+    ports:
+      - '3000:3000'
+    networks:
+      - transcendence
+
+volumes:
+  pgdata:
+  images:
+
+networks:
+  transcendence:

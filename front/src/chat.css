@@ -1,0 +1,20 @@
+#displayMessages::-webkit-scrollbar{
+    display: none;
+}
+
+textarea {
+    resize: none;
+	outline: none;
+}
+
+textarea::-webkit-scrollbar{
+    display: none;
+}
+
+#message{
+    word-break: break-word;
+}
+
+#scrollbar::-webkit-scrollbar{
+    display: none;
+}
